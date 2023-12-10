@@ -28,8 +28,7 @@ on:
               required: true
               default: 'https://sourceforge.net/projects/a03-files/files/A035FXXU4CWI1/vendor.img'
         ODM:
-              description: 'Enter Direct Link Of Your odm.img(leave blank if your device does not have odm'
-              required: true
+              description: 'Enter Direct Link Of Your odm.img(leave blank if your device does not have odm) '
               default: ''
         SUPER:
               description: 'Enter The Size Of Your Super Partition'
