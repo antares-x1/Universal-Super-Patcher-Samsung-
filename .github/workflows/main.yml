@@ -29,11 +29,11 @@ on:
               default: 'https://sourceforge.net/projects/a03-files/files/A035FXXU4CWI1/vendor.img'
         ODM:
               description: 'Enter Direct Link Of Your odm.img(leave default if your device does not have odm) '
-              default: '.'
+              default: ' https://no-odm.img '
         SUPER:
               description: 'Enter The Size Of Your Super Partition'
               required: true
-              default: '6763315200'
+              default: '676331500'
 
 
 jobs:
