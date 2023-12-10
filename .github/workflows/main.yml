@@ -34,7 +34,7 @@ on:
         SUPER:
               description: 'Enter The Size Of Your Super Partition'
               required: true
-              default: '6153252600'
+              default: '6763315200'
 
 
 jobs:
@@ -55,7 +55,7 @@ jobs:
         git clone https://github.com/Exynos-nigg/lpunpack-lpmake-mirror.git lpbinary
         cd lpbinary
         bash install.sh
-    - name: Downloading Your SUPER And Extracting
+    - name: Downloading Your Vendor And Odm(if applicable)
       run: |
         cd lpbinary/binary
         wget -q ${{ github.event.inputs.VENDOR }}
@@ -77,9 +77,11 @@ jobs:
     - name: Packing
       run: |
         cd lpbinary/binary
-        
+        if [ -f odm.img ]; then  main=$(($(ls -nl odm.img | awk '{print $5}') + 2621440 +$(ls -nl system.img | awk '{print $5}') + $(ls -nl vendor.img | awk '{print $5}'))); fi
+        if [ -f system_ext.img ]; then  main=$(($(2621440 + 2621440 +$(ls -nl system.img | awk '{print $5}') + $(ls -nl vendor.img | awk '{print $5}'))); fi
+        echo $main > main.txt
         if [ -f system_ext.img ]; then  ./lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:${{ github.event.inputs.SUPER }} --group main:$(<main.txt) --partition system:readonly:$(ls -nl system.img | awk '{print $5}'):main --image system=system.img --partition vendor:readonly:$(ls -nl vendor.img | awk '{print $5}'):main --image vendor=vendor.img --partition product:readonly:$(ls -nl product.img | awk '{print $5}'):main --image product=product.img --partition system_ext:readonly:$(ls -nl system_ext.img | awk '{print $5}'):main --image system_ext=system_ext.img --sparse --output super.img; fi
-        if [ -f odm.img ]; then  ./lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:${{ github.event.inputs.VENDOR }} --group main:$(<main.txt) --partition system:readonly:$(ls -nl system.img | awk '{print $5}'):main --image system=system.img --partition vendor:readonly:$(ls -nl vendor.img | awk '{print $5}'):main --image vendor=vendor.img --partition product:readonly:$(ls -nl product.img | awk '{print $5}'):main --image product=product.img --partition odm:readonly:$(ls -nl odm.img | awk '{print $5}'):main --image odm=odm.img --sparse --output super.img; fi
+        if [ -f odm.img ]; then  ./lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:${{ github.event.inputs.SUPER }} --group main:$(<main.txt) --partition system:readonly:$(ls -nl system.img | awk '{print $5}'):main --image system=system.img --partition vendor:readonly:$(ls -nl vendor.img | awk '{print $5}'):main --image vendor=vendor.img --partition product:readonly:$(ls -nl product.img | awk '{print $5}'):main --image product=product.img --partition odm:readonly:$(ls -nl odm.img | awk '{print $5}'):main --image odm=odm.img --sparse --output super.img; fi
         rm system.img && rm product.img && rm vendor.img && rm -f odm.img && rm -f system_ext.img
     - name: Creating tar and compressing to 7z
       run: |
