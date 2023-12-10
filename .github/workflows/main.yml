@@ -33,7 +33,7 @@ on:
         SUPER:
               description: 'Enter The Size Of Your Super Partition'
               required: true
-              default: '676331500'
+              default: '6763315200'
 
 
 jobs:
@@ -57,12 +57,12 @@ jobs:
     - name: Downloading Your Vendor And Odm(if applicable)
       run: |
         cd lpbinary/binary
-        wget -q ${{ github.event.inputs.VENDOR }}
-        wget -q ${{ github.event.inputs.ODM }}
+        wget  ${{ github.event.inputs.VENDOR }}
+        wget  ${{ github.event.inputs.ODM }}
         if [ -f *.zip ]; then  unzip *.zip; fi
         if [ -f *.xz ]; then  unxz *.xz; fi
-        wget -q https://sourceforge.net/projects/a03-files/files/product.img
-        wget -q https://sourceforge.net/projects/a03-files/files/system_ext.img
+        wget  https://sourceforge.net/projects/a03-files/files/product.img
+        wget  https://sourceforge.net/projects/a03-files/files/system_ext.img
     - name: Downloading Your GSI And Extracting
       run: |
         cd lpbinary/binary
