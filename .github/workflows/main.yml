@@ -57,8 +57,8 @@ jobs:
     - name: Downloading Your Vendor And Odm(if applicable)
       run: |
         cd lpbinary/binary
-        wget -q ${{ github.event.inputs.VENDOR }}
-        wget -q ${{ github.event.inputs.ODM }}
+        wget ${{ github.event.inputs.VENDOR }}
+        wget ${{ github.event.inputs.ODM }}
         if [ -f *.zip ]; then  unzip *.zip; fi
         if [ -f *.xz ]; then  unxz *.xz; fi
         wget  -q https://sourceforge.net/projects/a03-files/files/product.img
