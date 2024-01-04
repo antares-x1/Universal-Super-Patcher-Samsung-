@@ -55,7 +55,7 @@ blockdev --getsize64 /dev/block/bootdevice/by-name/super
   - Get that value and put it in the box
 
 
- # Wait for 20-25 minutes to finish the build 
+ # Wait for 10-15 minutes to finish the build 
  # Credits:
  These people have helped this project in some way or another, so they should be the ones who receive all the credit:
 - [Phhusson](https://github.com/phhusson)
